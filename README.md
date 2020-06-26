@@ -1,6 +1,4 @@
-# pizza shop ordering app made with laravel and vue
-pizza shop web app
-
+# pizza shop ordering web app made with laravel and vue
 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
