@@ -37996,7 +37996,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-primary",
+                    staticClass: "btn btn-success",
                     on: {
                       click: function($event) {
                         return _vm.addCart(product)

@@ -9,7 +9,7 @@
             <div class="col-md-6">$ {{ product.price }}</div>
           </div>
           <p class="text-right mt-2">
-            <button @click="addCart(product)" class="btn btn-primary">Add to Cart</button>
+            <button @click="addCart(product)" class="btn btn-success">Add to Cart</button>
           </p>
         </div>
       </div>
