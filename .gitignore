@@ -203,3 +203,4 @@ test/
 dist/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,laravel,node,vue,vuejs
+.vscode/settings.json
