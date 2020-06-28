@@ -16,7 +16,7 @@ window.swal = require('sweetalert');
 
 
 Vue.component('products', require('./components/Products.vue').default);
-Vue.component('dashboard', require('./components/etc.vue').default);
+Vue.component('dashboard', require('./components/Dashboard.vue').default);
 
 
 
