@@ -110,7 +110,7 @@ export default {
       );
     },
     deliveryCost() {
-      let deliveryCost = 6;
+      let deliveryCost = 4;
       return deliveryCost;
     },
     subTotal() {

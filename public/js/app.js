@@ -2198,7 +2198,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }, 0);
     },
     deliveryCost: function deliveryCost() {
-      var deliveryCost = 6;
+      var deliveryCost = 4;
       return deliveryCost;
     },
     subTotal: function subTotal() {
