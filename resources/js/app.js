@@ -2,7 +2,6 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
-import store from './store';
 
 
 Vue.use(VueRouter);
@@ -22,5 +21,4 @@ Vue.component('dashboard', require('./components/Dashboard.vue').default);
 
 const app = new Vue({
     el: '#app',
-    store,
 });

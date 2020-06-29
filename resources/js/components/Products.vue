@@ -1,64 +1,48 @@
 <template>
+  <div class="row">
+    <!-- products start -->
+    <div class="col-md-9 left">
+      <div class="row">
+        <section class="products">
+          <div v-for="product in products" :key="product.id" class="card card-body col-md-4">
+            <h3 class="product__header">{{ product.name }}</h3>
 
-<div class="row">
-
-        <!-- products start -->
-        <div class="col-md-9 left">
+            <p class="product__description">{{ product.description }}</p>
 
             <div class="row">
-              <section class="products">
-        <div v-for="product in products" :key="product.id" class="card card-body col-md-4">
+              <div class="col-md-6">$ {{ product.price }}</div>
+            </div>
 
-        <h3 class="product__header">{{ product.name }}</h3>
+            <div class="cart">
+              <button @click="updateCart(product, 'subtract')" class="cart__button">-</button>
 
-        <p class="product__description">{{ product.description }}</p>
+              <span class="cart__quantity">{{ product.quantity }}</span>
 
-        <div class="row">
-            <div class="col-md-6">$ {{ product.price }}</div>
-        </div>
-
-        <div class="cart">
-
-          <button @click="updateCart(product, 'subtract')" class="cart__button">-</button>
-
-          <span class="cart__quantity">{{ product.quantity }}</span>
-
-          <button @click="updateCart(product, 'add')" class="cart__button">+</button>
-          <button @click="addToCart()" class="btn btn-primary">Add to Cart</button>
-
-        </div>
+              <button @click="updateCart(product, 'add')" class="cart__button">+</button>
+            </div>
+          </div>
+        </section>
       </div>
-     </section>
-      </div>
-   </div>
-      <!-- products end -->
-
-
-
-  <!-- cart start -->
-   <div class="col-md-3 right">
-
-     <nav class="nav">
-
-    <h2 class="nav__header">Cart</h2>
-
-    <div class="nav__cart">
-
-
-
-       <!-- badge start -->
-      <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="total-quantity">{{ totalQuantity }}</span>
-      </button>
-      <!-- badge end -->
-
-
     </div>
-  </nav>
+    <!-- products end -->
 
-    <!-- cart popup start -->
-      <div class="modal fade" id="cart">
+    <!-- cart start -->
+    <div class="col-md-3 right">
+      <nav class="nav">
+        <h2 class="nav__header">Cart</h2>
+
+        <div class="nav__cart">
+          <!-- badge start -->
+          <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="total-quantity">{{ totalQuantity }}</span>
+          </button>
+          <!-- badge end -->
+        </div>
+      </nav>
+
+      <!-- cart popup start -->
+      <div class="modal fade" id="cart" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -66,38 +50,45 @@
               <button class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-              <table class="table table-striped text-left">
+              <table class="table text-left">
                 <tbody>
-            
-                  <tr v-for="product in cart" :key="product.id">
-                    <td>{{product.name}} ({{ product.quantity }})</td>
-                    <td>$ {{product.price}}</td>
-                    
-                      
-                     
+                  <tr v-for="(product) in cart" :key="product.id">
+                    <td>({{ product.quantity }}) x {{product.name}}</td>
+                    <td>{{ product.quantity }} x ${{ product.price }}</td>
+                    <td>
+                      <button @click="updateCart(product, 'subtract')">-</button>
 
-          <button @click="updateCart(product, 'subtract')">-</button>
+                      <span class="cart__quantity">{{ product.quantity }}</span>
 
-          <span class="cart__quantity">{{ product.quantity }}</span>
-
-          <button @click="updateCart(product, 'add')" >+</button>
-
-      
-              
-                    <td width="60">
-                      <button @click="removeCart(n)" class="btn btn-danger btn-sm">
+                      <button @click="updateCart(product, 'add')">+</button>
+                    </td>
+                    <!-- later if there is time-->
+                    <!-- <td width="60">
+                      <button @click="removeProduct()" class="btn btn-danger btn-sm">
                         <i class="fas fa-times-circle"></i>
                       </button>
-                    </td>
+                    </td>-->
                   </tr>
-
-            
-
                 </tbody>
               </table>
             </div>
+
             <div class="modal-footer">
-              Total Price: $ {{totalprice}} &nbsp;
+              Sub Total: $ {{subTotal}} &nbsp;
+              <button
+                data-dismiss="modal"
+                class="btn btn-primary"
+              >Checkout</button>
+            </div>
+            <div class="modal-footer">
+              Delivery Cost: $ {{deliveryCost}} &nbsp;
+              <button
+                data-dismiss="modal"
+                class="btn btn-primary"
+              >Checkout</button>
+            </div>
+            <div class="modal-footer">
+              Total Price: $ {{totalPrice}} &nbsp;
               <button
                 data-dismiss="modal"
                 class="btn btn-primary"
@@ -107,42 +98,20 @@
         </div>
       </div>
       <!-- cart popup end -->
-
-
-
-
-
-
-
-   </div>
-  <!-- cart end -->
-
-
-
-</div>
-      
+    </div>
+    <!-- cart end -->
+  </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      products: [],
-      product: {
-        id: "",
-        name: "",
-        description: "",
-        price: "",
-        quantity: ""
-      },
-      showCart: false,
-      totalprice: "0",
+      products: []
     };
   },
   created() {
     this.viewProduct();
-    this.viewCart();
   },
 
   computed: {
@@ -154,6 +123,21 @@ export default {
         (total, product) => total + product.quantity,
         0
       );
+    },
+    deliveryCost() {
+      let deliveryCost = 6;
+      return deliveryCost;
+    },
+    subTotal() {
+      let subTotal = 0;
+      for (let p of this.products) {
+        subTotal += p.price * p.quantity;
+      }
+      return subTotal;
+    },
+    totalPrice() {
+      let totalPrice = this.subTotal + this.deliveryCost;
+      return totalPrice;
     }
   },
 
@@ -166,17 +150,7 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    viewCart() {
-      if (localStorage.getItem("carts")) {
-        this.carts = JSON.parse(localStorage.getItem("carts"));
-        this.totalprice = this.carts.reduce((total, item) => {
-          return total + this.quantity * item.price;
-        }, 0);
-      }
-    },
-    addToCart(){
-      this.$store.commit('addToCart', this.product)
-    },
+
     updateCart(product, updateType) {
       for (let i = 0; i < this.products.length; i++) {
         if (this.products[i].id === product.id) {
@@ -187,7 +161,6 @@ export default {
           } else {
             this.products[i].quantity++;
           }
-
           break;
         }
       }
@@ -197,7 +170,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .nav {
   align-items: center;
   background: salmon;
@@ -205,25 +177,25 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 2rem;
-  
+
   &__header {
     font-size: 2.5rem;
   }
-  
+
   &__cart {
     position: relative;
-    
+
     button {
       background: none;
       border: 0;
       color: white;
       cursor: pointer;
     }
-    
+
     i {
       font-size: 2rem;
     }
-    
+
     .total-quantity {
       align-items: center;
       background: lightblue;
@@ -238,28 +210,6 @@ export default {
       top: -10px;
       width: 2rem;
     }
-    
-    .cart-dropdown {
-      background: white;
-      border: 1px solid lightgray;
-      border-radius: 10px;
-      box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-      color: #333;
-      font-size: 1.3rem;
-      overflow: auto;
-      padding: 0 1rem;
-      position: absolute;
-      right: 0;
-      width: 12rem;
-      
-      .cart-dropdown__list {
-        list-style: none;
-        
-        li {
-          margin: 1rem 0;
-        }
-      }
-    }
   }
 }
 
@@ -267,23 +217,23 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
+
   .product {
     border: 1px solid lightgray;
     border-radius: 10px;
     margin: 2rem;
     padding: 1rem;
-    
+
     &__header {
       font-size: 2rem;
       text-align: center;
     }
-    
+
     &__image {
       display: block;
       margin: 1rem auto;
     }
-    
+
     &__description {
       font-size: 1.3rem;
       margin-top: 1rem;
@@ -294,7 +244,7 @@ export default {
 .cart {
   margin-top: 2rem;
   text-align: center;
-  
+
   &__button {
     background: lightblue;
     border: 0;
@@ -305,11 +255,10 @@ export default {
     height: 2.5rem;
     width: 2.5rem;
   }
-  
+
   &__quantity {
     font-size: 1.5rem;
     margin: 0 1rem;
   }
 }
-
 </style>
