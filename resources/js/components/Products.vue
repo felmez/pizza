@@ -3,32 +3,32 @@
     <!-- products start -->
     <div class="col-md-9">
       <div class="row">
-          <div v-for="product in products" :key="product.id" class="card card-body col-md-4">
-            <h4>{{ product.name }}</h4>
-            <p>{{ product.description }}</p>
-            <div class="row">
-              <div class="col-md-6">$ {{ product.price }}</div>
-            </div>
-            <div class="text-right mt-2">
-              <button @click="updateCart(product, 'subtract')" class="btn btn-warning">-</button>
-              &nbsp;
-              <span>{{ product.quantity }}</span>
-              &nbsp;
-              <button @click="updateCart(product, 'add')" class="btn btn-warning">+</button>
-            </div>
+        <div v-for="product in products" :key="product.id" class="card card-body col-md-4">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <div class="row">
+            <div class="col-md-6">$ {{ product.price }}</div>
           </div>
+          <div class="text-right mt-2">
+            <button @click="updateCart(product, 'subtract')" class="btn btn-warning">-</button>
+            &nbsp;
+            <span>{{ product.quantity }}</span>
+            &nbsp;
+            <button @click="updateCart(product, 'add')" class="btn btn-warning">+</button>
+          </div>
+        </div>
       </div>
     </div>
     <!-- products end -->
 
     <!-- cart start -->
     <div class="col-md-3">
-          <!-- badge start -->
-          <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="total-quantity">Cart {{ totalQuantity }}</span>
-          </button>
-          <!-- badge end -->
+      <!-- badge start -->
+      <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="total-quantity">Cart {{ totalQuantity }}</span>
+      </button>
+      <!-- badge end -->
 
       <!-- cart modal start -->
       <div class="modal fade" id="cart" data-backdrop="static" data-keyboard="false">
@@ -55,9 +55,16 @@
             </div>
             <div class="modal-footer">Subtotal: $ {{subTotal}} &nbsp;</div>
             <div class="modal-footer">Delivery Cost: $ {{deliveryCost}} &nbsp;</div>
-            <div class="modal-footer">Total Price: EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}&nbsp;</div>
+            <div
+              class="modal-footer"
+            >Total Price: EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}&nbsp;</div>
             <div class="modal-footer">
-              <button data-toggle="modal" data-dismiss="modal" data-target="#checkout" class="btn btn-primary">Checkout</button>
+              <button
+                data-toggle="modal"
+                data-dismiss="modal"
+                data-target="#checkout"
+                class="btn btn-primary"
+              >Checkout</button>
             </div>
           </div>
         </div>
@@ -66,38 +73,47 @@
     </div>
     <!-- cart end -->
 
-      <!-- checkout modal start -->
-      <div class="modal fade" id="checkout" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Checkout</h5>
-              <button class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-              <form role="form">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name">
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="tel" class="form-control" id="phone">
-            </div>
-            <div class="form-group">
-              <label for="address">Address</label>
-              <input type="text" class="form-control" id="address">
-            </div>
-          </form>
-            </div>
-            <div class="modal-footer">
-              <button data-toggle="modal" data-dismiss="modal" data-target="#cart" class="btn btn-warning" style="left: 0;">Back to cart</button>
-              <button class="btn btn-success" type="submit">Order EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}</button>
-            </div>
+    <!-- checkout modal start -->
+    <div class="modal fade" id="checkout" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Checkout</h5>
+            <button class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form role="form">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" class="form-control" id="phone" />
+              </div>
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              data-toggle="modal"
+              data-dismiss="modal"
+              data-target="#cart"
+              class="btn btn-warning"
+              style="left: 0;"
+            >Back to cart</button>
+            <button
+              class="btn btn-success"
+              type="submit"
+            >Order EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}</button>
           </div>
         </div>
       </div>
-      <!-- checkout modal end -->
+    </div>
+    <!-- checkout modal end -->
   </div>
 </template>
 
@@ -168,5 +184,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>
