@@ -6,18 +6,13 @@
         <section class="products">
           <div v-for="product in products" :key="product.id" class="card card-body col-md-4">
             <h3 class="product__header">{{ product.name }}</h3>
-
             <p class="product__description">{{ product.description }}</p>
-
             <div class="row">
               <div class="col-md-6">$ {{ product.price }}</div>
             </div>
-
             <div class="cart">
               <button @click="updateCart(product, 'subtract')" class="cart__button">-</button>
-
               <span class="cart__quantity">{{ product.quantity }}</span>
-
               <button @click="updateCart(product, 'add')" class="cart__button">+</button>
             </div>
           </div>
@@ -30,7 +25,6 @@
     <div class="col-md-3 right">
       <nav class="nav">
         <h2 class="nav__header">Cart</h2>
-
         <div class="nav__cart">
           <!-- badge start -->
           <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
@@ -40,8 +34,7 @@
           <!-- badge end -->
         </div>
       </nav>
-
-      <!-- cart popup start -->
+      <!-- cart modal start -->
       <div class="modal fade" id="cart" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
@@ -50,7 +43,7 @@
               <button class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-              <table class="table text-left">
+              <table class="table">
                 <tbody>
                   <tr v-for="(product) in cart" :key="product.id">
                     <td>({{ product.quantity }}) x {{product.name}}</td>
@@ -63,28 +56,54 @@
                       <button @click="updateCart(product, 'add')">+</button>
                     </td>
                   </tr>
-                    <!-- later if there is time-->
-                    <!-- <td width="60">
-                      <button @click="removeProduct()" class="btn btn-danger btn-sm">
-                        <i class="fas fa-times-circle"></i>
-                      </button>
-                    </td>-->
                 </tbody>
               </table>
             </div>
-
-            <div class="modal-footer">Sub Total: $ {{subTotal}} &nbsp;</div>
+            <div class="modal-footer">Subtotal: $ {{subTotal}} &nbsp;</div>
             <div class="modal-footer">Delivery Cost: $ {{deliveryCost}} &nbsp;</div>
             <div class="modal-footer">Total Price: EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}&nbsp;</div>
             <div class="modal-footer">
-              <button data-dismiss="modal" class="btn btn-primary">Checkout</button>
+              <button data-toggle="modal" data-dismiss="modal" data-target="#checkout" class="btn btn-primary">Checkout</button>
             </div>
           </div>
         </div>
       </div>
-      <!-- cart popup end -->
+      <!-- cart modal end -->
     </div>
     <!-- cart end -->
+
+      <!-- checkout modal start -->
+      <div class="modal fade" id="checkout" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Checkout</h5>
+              <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form role="form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" class="form-control" id="phone">
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" class="form-control" id="address">
+            </div>
+          </form>
+            </div>
+            <div class="modal-footer">
+              <button data-toggle="modal" data-dismiss="modal" data-target="#cart" class="btn btn-warning" style="left: 0;">Back to cart</button>
+              <button class="btn btn-success" type="submit">Order EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- checkout modal end -->
   </div>
 </template>
 
