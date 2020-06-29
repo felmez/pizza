@@ -1,39 +1,35 @@
 <template>
   <div class="row">
     <!-- products start -->
-    <div class="col-md-9 left">
+    <div class="col-md-9">
       <div class="row">
-        <section class="products">
           <div v-for="product in products" :key="product.id" class="card card-body col-md-4">
-            <h3 class="product__header">{{ product.name }}</h3>
-            <p class="product__description">{{ product.description }}</p>
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
             <div class="row">
               <div class="col-md-6">$ {{ product.price }}</div>
             </div>
-            <div class="cart">
-              <button @click="updateCart(product, 'subtract')" class="cart__button">-</button>
-              <span class="cart__quantity">{{ product.quantity }}</span>
-              <button @click="updateCart(product, 'add')" class="cart__button">+</button>
+            <div class="text-right mt-2">
+              <button @click="updateCart(product, 'subtract')" class="btn btn-warning">-</button>
+              &nbsp;
+              <span>{{ product.quantity }}</span>
+              &nbsp;
+              <button @click="updateCart(product, 'add')" class="btn btn-warning">+</button>
             </div>
           </div>
-        </section>
       </div>
     </div>
     <!-- products end -->
 
     <!-- cart start -->
-    <div class="col-md-3 right">
-      <nav class="nav">
-        <h2 class="nav__header">Cart</h2>
-        <div class="nav__cart">
+    <div class="col-md-3">
           <!-- badge start -->
           <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
             <i class="fas fa-shopping-cart"></i>
-            <span class="total-quantity">{{ totalQuantity }}</span>
+            <span class="total-quantity">Cart {{ totalQuantity }}</span>
           </button>
           <!-- badge end -->
-        </div>
-      </nav>
+
       <!-- cart modal start -->
       <div class="modal fade" id="cart" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -49,11 +45,9 @@
                     <td>({{ product.quantity }}) x {{product.name}}</td>
                     <td>{{ product.quantity }} x ${{ product.price }}</td>
                     <td>
-                      <button @click="updateCart(product, 'subtract')">-</button>
-
-                      <span class="cart__quantity">{{ product.quantity }}</span>
-
-                      <button @click="updateCart(product, 'add')">+</button>
+                      <button @click="updateCart(product, 'subtract')" class="btn btn-warning">-</button>
+                      <span>{{ product.quantity }}</span>
+                      <button @click="updateCart(product, 'add')" class="btn btn-warning">+</button>
                     </td>
                   </tr>
                 </tbody>
@@ -174,95 +168,5 @@ export default {
 </script>
 
 <style lang="scss">
-.nav {
-  align-items: center;
-  background: salmon;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem;
 
-  &__header {
-    font-size: 2.5rem;
-  }
-
-  &__cart {
-    position: relative;
-
-    button {
-      background: none;
-      border: 0;
-      color: white;
-      cursor: pointer;
-    }
-
-    i {
-      font-size: 2rem;
-    }
-
-    .total-quantity {
-      align-items: center;
-      background: lightblue;
-      border-radius: 50%;
-      display: flex;
-      font-weight: bold;
-      height: 2rem;
-      justify-content: center;
-      padding: 0.5rem;
-      position: absolute;
-      right: -10px;
-      top: -10px;
-      width: 2rem;
-    }
-  }
-}
-
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  .product {
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    margin: 2rem;
-    padding: 1rem;
-
-    &__header {
-      font-size: 2rem;
-      text-align: center;
-    }
-
-    &__image {
-      display: block;
-      margin: 1rem auto;
-    }
-
-    &__description {
-      font-size: 1.3rem;
-      margin-top: 1rem;
-    }
-  }
-}
-
-.cart {
-  margin-top: 2rem;
-  text-align: center;
-
-  &__button {
-    background: lightblue;
-    border: 0;
-    color: white;
-    cursor: pointer;
-    font-size: 1.5rem;
-    font-weight: bold;
-    height: 2.5rem;
-    width: 2.5rem;
-  }
-
-  &__quantity {
-    font-size: 1.5rem;
-    margin: 0 1rem;
-  }
-}
 </style>
