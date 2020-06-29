@@ -1,24 +1,50 @@
 <template>
   <div class="row">
+
+    <!-- products start -->
     <div class="col-md-9 left">
+
       <div class="row">
+
         <div v-for="product in products" v-bind:key="product.id" class="card card-body col-md-4">
+
           <h4>{{ product.name }}</h4>
+
           <p>{{ product.description }}</p>
+
           <div class="row">
             <div class="col-md-6">$ {{ product.price }}</div>
           </div>
+
+
           <p class="text-right mt-2">
             <button @click="addCart(product)" class="btn btn-primary">Add to Cart</button>
           </p>
+
+
         </div>
+
+
       </div>
+
+
     </div>
+    <!-- products end -->
+
+
+    <!-- cart start -->
     <div class="col-md-3 right">
+
+
+      <!-- badge start -->
       <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
         <i class="fas fa-shopping-cart"></i>
         <span class="badge badge-light">{{badge}}</span>
       </button>
+      <!-- badge end -->
+
+
+    <!-- cart popup start -->
       <div class="modal fade" id="cart">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
@@ -54,7 +80,13 @@
           </div>
         </div>
       </div>
+      <!-- cart popup end -->
+
+
     </div>
+    <!-- cart end -->
+
+
   </div>
 </template>
 
