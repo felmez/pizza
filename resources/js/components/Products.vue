@@ -46,7 +46,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Your Cart</h5>
+              <h5 class="modal-title">Shopping Cart</h5>
               <button class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -62,37 +62,22 @@
 
                       <button @click="updateCart(product, 'add')">+</button>
                     </td>
+                  </tr>
                     <!-- later if there is time-->
                     <!-- <td width="60">
                       <button @click="removeProduct()" class="btn btn-danger btn-sm">
                         <i class="fas fa-times-circle"></i>
                       </button>
                     </td>-->
-                  </tr>
                 </tbody>
               </table>
             </div>
 
+            <div class="modal-footer">Sub Total: $ {{subTotal}} &nbsp;</div>
+            <div class="modal-footer">Delivery Cost: $ {{deliveryCost}} &nbsp;</div>
+            <div class="modal-footer">Total Price: EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}&nbsp;</div>
             <div class="modal-footer">
-              Sub Total: $ {{subTotal}} &nbsp;
-              <button
-                data-dismiss="modal"
-                class="btn btn-primary"
-              >Checkout</button>
-            </div>
-            <div class="modal-footer">
-              Delivery Cost: $ {{deliveryCost}} &nbsp;
-              <button
-                data-dismiss="modal"
-                class="btn btn-primary"
-              >Checkout</button>
-            </div>
-            <div class="modal-footer">
-              Total Price: EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }} &nbsp;
-              <button
-                data-dismiss="modal"
-                class="btn btn-primary"
-              >Checkout</button>
+              <button data-dismiss="modal" class="btn btn-primary">Checkout</button>
             </div>
           </div>
         </div>

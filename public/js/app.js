@@ -2177,21 +2177,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -38840,54 +38825,24 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-footer" }, [
-                  _vm._v(
-                    "\n            Sub Total: $ " +
-                      _vm._s(_vm.subTotal) +
-                      "  \n            "
-                  ),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Checkout")]
-                  )
+                  _vm._v("Sub Total: $ " + _vm._s(_vm.subTotal) + "  ")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _vm._v("Delivery Cost: $ " + _vm._s(_vm.deliveryCost) + "  ")
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-footer" }, [
                   _vm._v(
-                    "\n            Delivery Cost: $ " +
-                      _vm._s(_vm.deliveryCost) +
-                      "  \n            "
-                  ),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Checkout")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _vm._v(
-                    "\n            Total Price: EUR " +
+                    "Total Price: EUR " +
                       _vm._s(_vm.totalPrice * 0.89) +
                       " / USD " +
                       _vm._s(_vm.totalPrice) +
-                      "  \n            "
-                  ),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Checkout")]
+                      " "
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
               ])
             ]
           )
@@ -38902,12 +38857,24 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Your Cart")]),
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Shopping Cart")]),
       _vm._v(" "),
       _c(
         "button",
         { staticClass: "close", attrs: { "data-dismiss": "modal" } },
         [_vm._v("×")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { "data-dismiss": "modal" } },
+        [_vm._v("Checkout")]
       )
     ])
   }
