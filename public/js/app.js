@@ -38873,7 +38873,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-footer" }, [
                   _vm._v(
-                    "\n            Total Price: $ " +
+                    "\n            Total Price: EUR " +
+                      _vm._s(_vm.totalPrice * 0.89) +
+                      " / USD " +
                       _vm._s(_vm.totalPrice) +
                       "  \n            "
                   ),

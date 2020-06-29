@@ -88,7 +88,7 @@
               >Checkout</button>
             </div>
             <div class="modal-footer">
-              Total Price: $ {{totalPrice}} &nbsp;
+              Total Price: EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }} &nbsp;
               <button
                 data-dismiss="modal"
                 class="btn btn-primary"
