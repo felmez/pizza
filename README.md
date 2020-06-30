@@ -7,6 +7,69 @@
 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
+
+----------
+
+# Getting started
+
+## Installation
+
+Clone the repository
+
+    git clone https://github.com/felmez/pizza.git
+
+Switch to the repo folder
+
+    cd pizza
+
+Install all the dependencies using composer
+
+    composer install
+
+Install node dependencies using npm for vue js components
+
+    npm install
+
+Copy the example env file and make the required configuration changes in the .env file
+
+    cp .env.example .env 
+
+Make the required configuration changes in database config file
+
+    config/database.php
+
+Generate a new application key
+
+    php artisan key:generate
+
+Run the database migrations (**Set the database connection in .env before migrating**)
+
+    php artisan migrate
+
+Start node watcher on another terminal tab
+
+    npm run watch
+
+Start the local development server
+
+    php artisan serve
+
+You can now access the server at http://127.0.0.1:8000/
+
+
+## Database seeding
+
+Run the database seeder for dummy orders and products
+
+    php artisan db:seed
+
+***Note*** : It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
+
+    php artisan migrate:refresh
+ 
+----------
+
+
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
