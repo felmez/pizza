@@ -1,8 +1,12 @@
 <template>
   <div class="row">
+    <!-- products start -->
     <div class="col-md-8">
+      <h5 class="card-title">Menu Products</h5>
       <div class="row">
         <div v-for="product in products" v-bind:key="product.id" class="card card-body col-md-4">
+          <img class="w-100 rounded-circle" :src="product.image" alt />
+          <br />
           <h4>{{ product.name }}</h4>
           <p>{{ product.description }}</p>
           <div class="row">
@@ -15,8 +19,20 @@
         </div>
       </div>
     </div>
+    <!-- products end -->
+
+    <!--  add form start -->
     <div class="col-md-4">
+      <br />
       <form>
+        <div class="form-group">
+          <button
+            type="button"
+            class="btn btn-success btn-lg btn-block"
+            data-toggle="modal"
+            data-target="#orders"
+          >Orders History</button>
+        </div>
         <div class="form-group">
           <label>Name</label>
           <input type="text" class="form-control" v-model="product.name" />
@@ -29,15 +45,71 @@
           <label>Price</label>
           <input type="number" class="form-control" v-model="product.price" />
         </div>
+        <div class="form-group">
+          <label>Image URL</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="product.image"
+            placeholder="https://i.ibb.co/jMmCHMd/pizza.jpg"
+          />
+        </div>
         <button v-if="add" @click.prevent="addProduct()" class="btn btn-primary">Add Product</button>
         <button
           v-if="edit"
           @click.prevent="updateProduct(product.id)"
           class="btn btn-warning"
         >Edit Product</button>
-        <button @click.prevent="clearProduct()" class="btn btn-info">Clear</button>
+        <button @click.prevent="clearProduct()" class="btn">Clear</button>
       </form>
     </div>
+    <!-- add form end -->
+
+    <!-- orders history modal start -->
+    <div class="modal fade" id="orders">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Orders History</h5>
+            <button class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <table class="table-bordered">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Customer Phone</th>
+                  <th>Customer Address</th>
+                  <th>Ordered Products</th>
+                  <th>Products Quantities</th>
+                  <th>Total Price</th>
+                  <th>Order Date</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="order in orders" :key="order.id">
+                  <td>{{ order.name }}</td>
+                  <td>{{ order.phone }}</td>
+                  <td>{{ order.address }}</td>
+                  <td>{{ order.product_id }}</td>
+                  <td>{{ order.product_quantity }}</td>
+                  <td>{{ order.total_price }}</td>
+                  <td>{{ order.created_at }}</td>
+                  <td>
+                    <a href="/menu" target="_blank">Order {{ order.id }}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button data-dismiss="modal" class="btn btn-primary">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- orders history modal end -->
   </div>
 </template>
 
@@ -50,16 +122,27 @@ export default {
         id: "",
         name: "",
         description: "",
+        image: "",
         price: ""
       },
       add: true,
-      edit: false
+      edit: false,
+      orders: []
     };
   },
   created() {
     this.viewProduct();
+    this.viewOrder();
   },
   methods: {
+    viewOrder() {
+      fetch("api/orders")
+        .then(res => res.json())
+        .then(res => {
+          this.orders = res.data;
+        })
+        .catch(err => console.log(err));
+    },
     viewProduct() {
       fetch("api/products")
         .then(res => res.json())
@@ -81,6 +164,7 @@ export default {
           swal("Successful", "Product has been added", "success");
           this.product.name = "";
           this.product.description = "";
+          this.product.image = "";
           this.product.price = "";
           this.viewProduct();
         })
@@ -94,6 +178,7 @@ export default {
       this.product.id = pro.id;
       this.product.name = pro.name;
       this.product.description = pro.description;
+      this.product.image = pro.image;
       this.product.price = pro.price;
     },
     updateProduct(id) {
@@ -111,6 +196,7 @@ export default {
           this.edit = false;
           this.product.name = "";
           this.product.description = "";
+          this.product.image = "";
           this.product.price = "";
           this.viewProduct();
         })
@@ -147,6 +233,7 @@ export default {
       this.product.id = "";
       this.product.name = "";
       this.product.description = "";
+      this.product.image = "";
       this.product.price = "";
     }
   }

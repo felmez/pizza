@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->string('image')->default("https://i.ibb.co/jMmCHMd/pizza.jpg");
             $table->integer('price');
             $table->integer('quantity')->default(0);
             $table->timestamps();

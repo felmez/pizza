@@ -1,15 +1,25 @@
 <template>
   <div class="row">
+    <!-- cart badge start -->
+    <div class="col text-center">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="total-quantity">Cart {{ totalQuantity }}</span>
+      </button>
+    </div>
+    <!-- cart badge end -->
+
     <!-- products start -->
-    <div class="col-md-9">
+    <div class="col-md-12">
       <div class="row">
-        <div v-for="product in products" :key="product.id" class="card card-body col-md-4">
+        <div v-for="product in products" :key="product.id" class="card card-body col-md-3">
+          <img class="w-100 rounded-circle" :src="product.image" alt />
+          <br />
           <h4>{{ product.name }}</h4>
           <p>{{ product.description }}</p>
-          <div class="row">
-            <div class="col-md-6">$ {{ product.price }}</div>
-          </div>
-          <div class="text-right mt-2">
+          <p>${{ product.price }}</p>
+
+          <div class="align-middle mt-2">
             <button @click="updateCart(product, 'subtract')" class="btn btn-warning">-</button>
             &nbsp;
             <span>{{ product.quantity }}</span>
@@ -23,13 +33,6 @@
 
     <!-- cart start -->
     <div class="col-md-3">
-      <!-- badge start -->
-      <button class="btn btn-primary" data-toggle="modal" data-target="#cart">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="total-quantity">Cart {{ totalQuantity }}</span>
-      </button>
-      <!-- badge end -->
-
       <!-- cart modal start -->
       <div class="modal fade" id="cart" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -42,7 +45,7 @@
               <table class="table">
                 <tbody>
                   <tr v-for="(product) in cart" :key="product.id">
-                    <td>{{product.name}} x ({{ product.quantity }})</td>
+                    <td>{{product.name}} (x{{product.quantity }})</td>
                     <td>${{ product.price }}</td>
                     <td>
                       <button @click="updateCart(product, 'subtract')" class="btn btn-warning">-</button>
@@ -188,7 +191,7 @@ export default {
             }
           } else {
             this.products[i].quantity++;
-              swal("Whoopee!", "pizza added", "success");
+            swal("Whoopee!", "pizza added", "success");
           }
           break;
         }
@@ -233,4 +236,7 @@ export default {
 </script>
 
 <style lang="scss">
+.card {
+  border: none;
+}
 </style>
