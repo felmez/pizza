@@ -42,8 +42,8 @@
               <table class="table">
                 <tbody>
                   <tr v-for="(product) in cart" :key="product.id">
-                    <td>({{ product.quantity }}) x {{product.name}}</td>
-                    <td>{{ product.quantity }} x ${{ product.price }}</td>
+                    <td>{{product.name}} x ({{ product.quantity }})</td>
+                    <td>${{ product.price }}</td>
                     <td>
                       <button @click="updateCart(product, 'subtract')" class="btn btn-warning">-</button>
                       <span>{{ product.quantity }}</span>
@@ -82,18 +82,18 @@
             <button class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
-            <form role="form">
+            <form>
               <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" />
+                <label>Name</label>
+                <input type="text" class="form-control" v-model="order.name" />
               </div>
               <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="tel" class="form-control" id="phone" />
+                <label>Phone</label>
+                <input type="tel" class="form-control" v-model="order.phone" />
               </div>
               <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" />
+                <label>Address</label>
+                <input type="text" class="form-control" v-model="order.address" />
               </div>
             </form>
           </div>
@@ -108,7 +108,7 @@
             <button
               class="btn btn-success"
               type="submit"
-              @click="order()"
+              @click.prevent="updateOrder()"
               data-dismiss="modal"
             >Order EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}</button>
           </div>
@@ -123,11 +123,22 @@
 export default {
   data() {
     return {
-      products: []
+      products: [],
+      orders: [],
+      order: {
+        id: "",
+        product_id: "",
+        product_quantity: "",
+        total_price: "",
+        name: "",
+        phone: "",
+        address: ""
+      },
     };
   },
   created() {
     this.viewProduct();
+    this.viewOrder();
   },
 
   computed: {
@@ -184,8 +195,38 @@ export default {
       }
     },
 
-    order() {
-      swal("Awesome!", "thanks for your order", "success");
+    viewOrder() {
+      fetch("api/orders")
+        .then(res => res.json())
+        .then(res => {
+          this.orders = res.data;
+        })
+        .catch(err => console.log(err));
+    },
+
+    updateOrder() {
+      fetch("api/orders", {
+        method: "post",
+        body: JSON.stringify(this.order),
+        headers: {
+          "content-type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          swal("Awesome!", "thanks for your order", "success");
+          this.order.id = "";
+          this.order.product_id = "";
+          this.order.product_quantity = "";
+          this.order.total_price = "";
+          this.order.name = "";
+          this.order.phone = "";
+          this.order.address = "";
+          this.viewOrder();
+        })
+        .catch(err => {
+          swal("Oops!", "order failed, please check your info", "error");
+        });
     }
   }
 };

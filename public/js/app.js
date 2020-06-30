@@ -2211,11 +2211,22 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      products: []
+      products: [],
+      orders: [],
+      order: {
+        id: "",
+        product_id: "",
+        product_quantity: "",
+        total_price: "",
+        name: "",
+        phone: "",
+        address: ""
+      }
     };
   },
   created: function created() {
     this.viewProduct();
+    this.viewOrder();
   },
   computed: {
     cart: function cart() {
@@ -2285,8 +2296,42 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
       }
     },
-    order: function order() {
-      swal("Awesome!", "thanks for your order", "success");
+    viewOrder: function viewOrder() {
+      var _this2 = this;
+
+      fetch("api/orders").then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this2.orders = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    updateOrder: function updateOrder() {
+      var _this3 = this;
+
+      fetch("api/orders", {
+        method: "post",
+        body: JSON.stringify(this.order),
+        headers: {
+          "content-type": "application/json"
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        swal("Awesome!", "thanks for your order", "success");
+        _this3.order.id = "";
+        _this3.order.product_id = "";
+        _this3.order.product_quantity = "";
+        _this3.order.total_price = "";
+        _this3.order.name = "";
+        _this3.order.phone = "";
+        _this3.order.address = "";
+
+        _this3.viewOrder();
+      })["catch"](function (err) {
+        swal("Oops!", "order failed, please check your info", "error");
+      });
     }
   }
 });
@@ -38150,20 +38195,14 @@ var render = function() {
                         return _c("tr", { key: product.id }, [
                           _c("td", [
                             _vm._v(
-                              "(" +
+                              _vm._s(product.name) +
+                                " x (" +
                                 _vm._s(product.quantity) +
-                                ") x " +
-                                _vm._s(product.name)
+                                ")"
                             )
                           ]),
                           _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              _vm._s(product.quantity) +
-                                " x $" +
-                                _vm._s(product.price)
-                            )
-                          ]),
+                          _c("td", [_vm._v("$" + _vm._s(product.price))]),
                           _vm._v(" "),
                           _c("td", [
                             _c(
@@ -38245,7 +38284,87 @@ var render = function() {
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(2),
               _vm._v(" "),
-              _vm._m(3),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("form", [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Name")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.order.name,
+                          expression: "order.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.order.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.order, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Phone")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.order.phone,
+                          expression: "order.phone"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "tel" },
+                      domProps: { value: _vm.order.phone },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.order, "phone", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Address")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.order.address,
+                          expression: "order.address"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.order.address },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.order, "address", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -38269,7 +38388,8 @@ var render = function() {
                     attrs: { type: "submit", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
-                        return _vm.order()
+                        $event.preventDefault()
+                        return _vm.updateOrder()
                       }
                     }
                   },
@@ -38336,41 +38456,6 @@ var staticRenderFns = [
         { staticClass: "close", attrs: { "data-dismiss": "modal" } },
         [_vm._v("×")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c("form", { attrs: { role: "form" } }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "name" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "phone" } }, [_vm._v("Phone")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "tel", id: "phone" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "address" } }, [_vm._v("Address")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "address" }
-          })
-        ])
-      ])
     ])
   }
 ]
