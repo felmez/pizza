@@ -2206,6 +2206,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2272,14 +2274,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           if (updateType === "subtract") {
             if (this.products[i].quantity !== 0) {
               this.products[i].quantity--;
+              swal("Oops!", "pizza removed", "error");
             }
           } else {
             this.products[i].quantity++;
+            swal("Whoopee!", "pizza added", "success");
           }
 
           break;
         }
       }
+    },
+    order: function order() {
+      swal("Awesome!", "thanks for your order", "success");
     }
   }
 });
@@ -38257,7 +38264,15 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-success", attrs: { type: "submit" } },
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "submit", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.order()
+                      }
+                    }
+                  },
                   [
                     _vm._v(
                       "Order EUR " +

@@ -108,6 +108,8 @@
             <button
               class="btn btn-success"
               type="submit"
+              @click="order()"
+              data-dismiss="modal"
             >Order EUR {{ totalPrice * 0.89 }} / USD {{totalPrice }}</button>
           </div>
         </div>
@@ -171,13 +173,19 @@ export default {
           if (updateType === "subtract") {
             if (this.products[i].quantity !== 0) {
               this.products[i].quantity--;
+              swal("Oops!", "pizza removed", "error");
             }
           } else {
             this.products[i].quantity++;
+              swal("Whoopee!", "pizza added", "success");
           }
           break;
         }
       }
+    },
+
+    order() {
+      swal("Awesome!", "thanks for your order", "success");
     }
   }
 };
