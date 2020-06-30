@@ -5,7 +5,6 @@
 
 ![alt text](https://github.com/felmez/pizza/blob/master/demo.png?raw=true)
 
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 
 ----------
@@ -69,6 +68,8 @@ Run the database seeder for dummy orders and products
  
 ----------
 
+
+<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
